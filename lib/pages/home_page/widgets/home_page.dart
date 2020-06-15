@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:pokedex/consts/consts_app.dart';
 import 'package:pokedex/models/pokeapi.dart';
 import 'package:pokedex/pages/home_page/widgets/app_bar_home.dart';
@@ -51,28 +52,83 @@ class _HomePageState extends State<HomePage> {
                 ),
                 AppBarHome(),
                 Expanded(
-                    child: Container(
-                      child: Observer(
-                        name: 'ListaHomePage',
-                        builder: (BuildContext context) {
-                          PokeAPI _pokeApi = pokeApiStore.pokeAPI;
-                          return (_pokeApi != null)
-                            ? ListView.builder(
-                              itemCount: _pokeApi.pokemon.length,
-                              itemBuilder: (context, index){
-                                return ListTile(title: Text(_pokeApi.pokemon[index].name),);
-                              }
-                            ): Center(
-                              child: CircularProgressIndicator(),
-                            );
-                        },
-                      ),
+                  child: Container(
+                    child: Observer(
+                      name: 'ListaHomePage',
+                      builder: (BuildContext context) {
+                        return (pokeApiStore.pokeAPI != null)
+                          ? AnimationLimiter(
+                            child: GridView.builder(
+                              physics: BouncingScrollPhysics(),
+                              padding: EdgeInsets.all(12),
+                              addAutomaticKeepAlives: false,
+                              gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2
+                              ),
+                              itemCount: pokeApiStore.pokeAPI.pokemon.length,
+                              itemBuilder: (context, index) {
+                                return AnimationConfiguration.staggeredGrid(
+                                  position: index,
+                                  duration: const Duration (microseconds: 375),
+                                  columnCount: 2,
+                                  child: ScaleAnimation(
+                                    child: ScaleAnimation(
+                                      child: GestureDetector(
+                                        child: Padding(
+                                          // parei aqui
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                        /*child: PokeItem(
+                                          cor: _pokemonStore.getColorPokemon(
+                                            type: _pokemonStore.pokeApi.pokemon[index].type[0]
+                                          ),
+                                          tipos: _pokemonStore.pokeApi.pokemon[index].type,
+                                          nome: _pokemonStore.pokeApi.pokemon[index].name,
+                                          image: Hero(
+                                            tag: _pokemonStore.pokeApi.pokemon[index].numero,
+                                            child: Container(
+                                              margin: EdgeInsets.only(
+                                                left: 40,
+                                                top: 40
+                                              ),
+                                              child: _pokemonStore.getImage(
+                                                numero: _pokemonStore.pokeAPI.pokemon[index].numero,  
+                                              ),
+                                            ),
+                                          ),*/
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                Container(),
+                                                //PokeDetailPage(index: index),
+                                                //fullscreenDialog: true,
+                                            ),
+                                          );
+                                        }
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }, 
+                            ),
+                          )
+                          : Center(
+                            child: CircularProgressIndicator(),
+                          );
+                      },
                     ),
+                  ),
                 ),
               ],
             ),
           )
-        ],),
+        ],
+      ),
     );
   }
 }

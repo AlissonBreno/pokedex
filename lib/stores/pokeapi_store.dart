@@ -11,13 +11,16 @@ class PokeApiStore = _PokeApiStoreBase with _$PokeApiStore;
 abstract class _PokeApiStoreBase with Store {
   
   @observable
-  PokeAPI pokeAPI;
+  PokeAPI _pokeAPI;
+
+  @computed
+  PokeAPI get pokeAPI => _pokeAPI;
 
   @action
   fetchPokemonList(){
-    pokeAPI = null;
+    _pokeAPI = null;
     loadPokeAPI().then((pokeList) {
-      pokeAPI = pokeList; 
+      _pokeAPI = pokeList; 
     });
   }
 
@@ -26,8 +29,8 @@ abstract class _PokeApiStoreBase with Store {
       final response = await http.get(ConstsAPI.pokeapiURL);
       var decodeJson = jsonDecode(response.body);
       return PokeAPI.fromJson(decodeJson);
-    } catch (error) {
-      print('Erro ao carregar lista.');
+    } catch (error, stacktrace) {
+      print("Erro ao carregar lista." + stacktrace.toString());
       return null;
     }
   }
