@@ -68,18 +68,18 @@ class _HomePageState extends State<HomePage> {
                                   itemCount:
                                       pokeApiStore.pokeAPI.pokemon.length,
                                   itemBuilder: (context, index) {
-                                    Pokemon pokemon =
-                                        pokeApiStore.getPokemon(index: index);
+                                    Pokemon pokemon = pokeApiStore.getPokemon(index: index);
                                     return AnimationConfiguration.staggeredGrid(
                                       position: index,
-                                      duration:
-                                          const Duration(microseconds: 375),
+                                      duration: const Duration(microseconds: 375),
                                       columnCount: 2,
                                       child: ScaleAnimation(
                                         child: GestureDetector(
                                             child: PokeItem(
+                                              types: pokemon.type,
                                               index: index,
                                               name: pokemon.name,
+                                              num: pokemon.num,
                                             ),
                                             onTap: () {
                                               Navigator.push(
