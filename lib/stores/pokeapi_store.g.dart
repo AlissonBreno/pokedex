@@ -49,7 +49,7 @@ mixin _$PokeApiStore on _PokeApiStoreBase, Store {
   @override
   String toString() {
     return '''
-pokeAPI: ${pokeAPI}
+      pokeAPI: ${pokeAPI}
     ''';
   }
 }
