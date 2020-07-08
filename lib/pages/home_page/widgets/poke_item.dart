@@ -10,9 +10,53 @@ class PokeItem extends StatelessWidget {
   final String num;
   final List<String> types;
 
-  const PokeItem(
-      {Key key, this.name, this.index, this.color, this.num, this.types})
-      : super(key: key);
+  Widget setTipos(){
+    List<Widget> lista = [];
+    types.forEach((name) {
+      lista.add(
+        Column(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.all(0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Color.fromARGB(80, 255, 255, 255),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: Text(
+                  name.trim(),
+                  style: TextStyle(
+                    fontFamily: 'Google',
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ), 
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+          ],
+        ),
+      );
+    });
+    
+    return Column(
+      children: lista,
+      crossAxisAlignment: CrossAxisAlignment.start,
+    );
+  }
+
+  const PokeItem({
+    Key key, 
+    this.name, 
+    this.index, 
+    this.color, 
+    this.num, 
+    this.types
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +67,29 @@ class PokeItem extends StatelessWidget {
           padding: const EdgeInsets.all(4.0),
           child: Stack(
             children: <Widget>[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Flexible(
+                        child: Text(
+                        name, 
+                        style: TextStyle(
+                          fontFamily: 'Google',
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: setTipos(),
+                  ),
+                ],
+              ),
               Align(
                 alignment: Alignment.bottomRight,
                 child: Opacity(
@@ -43,18 +110,6 @@ class PokeItem extends StatelessWidget {
                     color: Colors.transparent,
                   ),
                   imageUrl: 'https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/$num.png',
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(
-                  name, 
-                  style: TextStyle(
-                    fontFamily: 'Google',
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white
-                  ),
                 ),
               ),
             ],

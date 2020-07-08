@@ -88,8 +88,6 @@ class _HomePageState extends State<HomePage> {
                                                   builder:
                                                       (BuildContext context) =>
                                                           Container(),
-                                                  //PokeDetailPage(index: index),
-                                                  //fullscreenDialog: true,
                                                 ),
                                               );
                                             }),
