@@ -10,19 +10,17 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      child: MaterialApp( 
+          child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Pokedex',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
         home: HomePage(),
-      ),
-      providers: <SingleChildWidget>[
+      ), providers: <SingleChildWidget>[
         Provider<PokeApiStore>(
           create: (_) => PokeApiStore(),
         ),
@@ -30,4 +28,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

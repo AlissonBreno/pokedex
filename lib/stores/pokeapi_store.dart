@@ -11,47 +11,58 @@ part 'pokeapi_store.g.dart';
 class PokeApiStore = _PokeApiStoreBase with _$PokeApiStore;
 
 abstract class _PokeApiStoreBase with Store {
-  
-  @observable
-  PokeAPI _pokeAPI;
 
-  @computed
+  @observable
+  PokeAPI _pokeAPI; 
+
+  @observable
+  Pokemon _pokemonAtual; 
+
+  @computed 
   PokeAPI get pokeAPI => _pokeAPI;
 
+  @computed 
+  Pokemon get pokemonAtual => _pokemonAtual;
+
   @action
-  fetchPokemonList(){
+  fetchPokemonList() {
     _pokeAPI = null;
     loadPokeAPI().then((pokeList) {
-      _pokeAPI = pokeList; 
+      _pokeAPI = pokeList;
     });
   }
 
-  @action
+  @action 
   getPokemon({int index}){
     return _pokeAPI.pokemon[index];
   }
 
-  @action
-  Widget getImage({ String numero }){
+  @action 
+  setPokemonAtual({int index}){
+    _pokemonAtual = _pokeAPI.pokemon[index];
+  }
+
+  @action 
+  Widget getImage({String numero}) {
     return CachedNetworkImage(
-      placeholder: (context, url) => new Container (
+      placeholder: (context, url) => new Container(
         color: Colors.transparent,
       ),
-      imageUrl: 'https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/$numero.png',
+      imageUrl:
+          'https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/$numero.png',
     );
   }
 
   Future<PokeAPI> loadPokeAPI() async {
-    try{
+    try {
       final response = await http.get(ConstsAPI.pokeapiURL);
       var decodeJson = jsonDecode(response.body);
       return PokeAPI.fromJson(decodeJson);
     } catch (error, stacktrace) {
-      print("Erro ao carregar lista." + stacktrace.toString());
+      print("Erro ao carregar lista" + stacktrace.toString());
       return null;
     }
   }
 
   
-
-}  
+}

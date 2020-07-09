@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-
-class AppBarHome extends StatelessWidget{
-  @override 
-  Widget build(BuildContext context){
+class AppBarHome extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return Container(
       child: Column(
         children: <Widget>[
@@ -12,13 +11,10 @@ class AppBarHome extends StatelessWidget{
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 Padding(
-                    padding: EdgeInsets.only(
-                      top: 20,
-                      right: 15
-                    ),
-                    child: IconButton(
+                  padding: EdgeInsets.only(top: 13, right: 5),
+                  child: IconButton(
                     icon: Icon(Icons.menu),
-                    onPressed: () {}
+                    onPressed: () {},
                   ),
                 )
               ],
@@ -28,23 +24,19 @@ class AppBarHome extends StatelessWidget{
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(
-                  left: 20,
-                ),
+                padding: const EdgeInsets.only(left: 20),
                 child: Text(
                   'Pokedex',
                   style: TextStyle(
-                    fontFamily: 'Google',
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30,
-                  ),
+                      fontFamily: 'Google',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 28),
                 ),
               ),
             ],
-          ),
+          )
         ],
       ),
-      //color: Colors.blue,
       height: 120,
     );
   }
